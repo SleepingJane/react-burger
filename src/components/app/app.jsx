@@ -14,7 +14,12 @@ export const App = () => {
 
   React.useEffect(() => {
     fetch(FETCH_URL)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Ошибка ${response.status}`);
+      })
       .then((result) => setIngredients(result.data))
       .catch((error) => console.error('Ошибка:', error));
   }, []);
@@ -38,7 +43,6 @@ export const App = () => {
           <BurgerIngredients ingredients={ingredients} />
           <BurgerConstructor selectedIngredients={ingredients} />
         </main>
-        <div id="modal"></div>
       </div>
     )
   );

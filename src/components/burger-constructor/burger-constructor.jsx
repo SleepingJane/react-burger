@@ -4,8 +4,8 @@ import {
   CurrencyIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
 
+import { useModal } from '../../hooks/useModal';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from './order-details/order-details';
 
@@ -13,11 +13,7 @@ import styles from './burger-constructor.module.css';
 
 export const BurgerConstructor = ({ selectedIngredients }) => {
   const fullPrice = 610;
-  const [isModalActive, setIsModalActive] = React.useState(false);
-
-  const onClose = () => {
-    setIsModalActive(!isModalActive);
-  };
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
     <section className={`${styles.container}`}>
@@ -70,14 +66,16 @@ export const BurgerConstructor = ({ selectedIngredients }) => {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={onClose}
+          onClick={openModal}
         >
           Оформить заказ
         </Button>
       </div>
-      <Modal isOpen={isModalActive} onClose={onClose}>
-        <OrderDetails />
-      </Modal>
+      {isModalOpen && (
+        <Modal onClose={closeModal}>
+          <OrderDetails />
+        </Modal>
+      )}
     </section>
   );
 };

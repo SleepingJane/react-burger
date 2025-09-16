@@ -6,39 +6,48 @@ import { ModalOverlay } from './modal-overlay/modal-overlay';
 
 import styles from './modal.module.css';
 
-export const Modal = ({ isOpen, onClose, headerTitle, children }) => {
+export const Modal = ({ onClose, headerTitle, children }) => {
+  const modalRef = React.useRef();
+  const modalOverlayRef = React.useRef();
+
   React.useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
     const handleEscapeKey = (event) => {
       if (event.code === 'Escape') {
         onClose();
       }
     };
-    document.addEventListener('keydown', handleEscapeKey);
-    return () => document.removeEventListener('keydown', handleEscapeKey);
-  }, [isOpen, onClose]);
+    const handleClick = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
 
-  return isOpen
-    ? ReactDOM.createPortal(
-        <>
-          <div className={styles.container}>
-            <header>
-              <div className={`pt-10 pr-10 pl-10 ${styles.header}`}>
-                {headerTitle && (
-                  <span className="pt-5 text text_type_main-large">{headerTitle}</span>
-                )}
-                <div className={`pt-5 ${styles.close}`}>
-                  <CloseIcon onClick={onClose} />
-                </div>
-              </div>
-            </header>
-            {children}
+    const modalOverlayRefCurrent = modalOverlayRef.current;
+    modalOverlayRefCurrent.addEventListener('click', handleClick);
+
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+      modalOverlayRefCurrent.removeEventListener('click', handleClick);
+    };
+  }, [onClose]);
+
+  return ReactDOM.createPortal(
+    <ModalOverlay modalOverlayRef={modalOverlayRef}>
+      <div className={styles.container} ref={modalRef}>
+        <h3>
+          <div className={`pt-10 pr-10 pl-10 ${styles.header}`}>
+            {headerTitle && (
+              <span className="pt-5 text text_type_main-large">{headerTitle}</span>
+            )}
+            <div className={`pt-5 ${styles.close}`}>
+              <CloseIcon onClick={onClose} />
+            </div>
           </div>
-          <ModalOverlay isOpen={isOpen} onClose={onClose} />
-        </>,
-        document.getElementById('modal')
-      )
-    : null;
+        </h3>
+        {children}
+      </div>
+    </ModalOverlay>,
+    document.getElementById('modal')
+  );
 };

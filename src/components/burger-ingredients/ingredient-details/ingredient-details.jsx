@@ -12,7 +12,7 @@ export const IngredientDetails = ({ item }) => {
 
   return (
     <div className={styles.content}>
-      <img className={styles.image} src={item.image} />
+      <img className={styles.image} src={item.image} alt={item.name} />
       <span className="text text_type_main-medium pt-4">{item.name}</span>
       <div
         className={`pl-5 pt-8 pb-15 text text_type_main-default text_color_inactive ${styles.info}`}

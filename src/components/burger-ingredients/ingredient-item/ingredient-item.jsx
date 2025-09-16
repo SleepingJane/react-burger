@@ -3,21 +3,23 @@ import {
   CurrencyIcon,
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
 
+import { useModal } from '../../../hooks/useModal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 
 import styles from './ingredient-item.module.css';
 
 export const IngredientItem = ({ item, count }) => {
-  const [isModalActive, setIsModalActive] = React.useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
 
-  const onClick = () => {
-    setIsModalActive(!isModalActive);
+  const onIngredientClick = () => {
+    if (!isModalOpen) {
+      openModal();
+    }
   };
 
   return (
-    <div className={styles.container} onClick={onClick}>
+    <div className={styles.container} onClick={onIngredientClick}>
       <div className={styles.image}>
         <img src={item.image} alt={item.name} />
         {count && <Counter count={count} size="default" />}
@@ -27,9 +29,11 @@ export const IngredientItem = ({ item, count }) => {
         <CurrencyIcon className="pl-1" />
       </div>
       {item.name}
-      <Modal headerTitle="Детали ингредиента" isOpen={isModalActive} onClose={onClick}>
-        <IngredientDetails item={item} />
-      </Modal>
+      {isModalOpen && (
+        <Modal onClose={closeModal} headerTitle="Детали ингредиента">
+          <IngredientDetails item={item} />
+        </Modal>
+      )}
     </div>
   );
 };

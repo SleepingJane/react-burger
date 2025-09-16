@@ -1,14 +1,13 @@
 .container {
   position: fixed;
   inset: 0;
-  z-index: 10;
+  z-index: 1000;
   width: fit-content;
   height: fit-content;
   margin: auto;
   background-color: #1c1c21;
   border-radius: 40px;
   cursor: default;
-  pointer-events: none;
 }
 
 .header {
@@ -20,5 +19,4 @@
   justify-self: flex-end;
   margin-left: auto;
   cursor: pointer;
-  pointer-events: all;
 }

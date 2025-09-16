@@ -1,5 +1,11 @@
 import styles from './modal-overlay.module.css';
 
-export const ModalOverlay = ({ isOpen, onClose }) => {
-  return <>{isOpen ? <div className={styles.background} onClick={onClose} /> : null}</>;
+export const ModalOverlay = ({ modalOverlayRef, children }) => {
+  return (
+    <>
+      <div className={styles.background} ref={modalOverlayRef}>
+        {children}
+      </div>
+    </>
+  );
 };
