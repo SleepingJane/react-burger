@@ -1,0 +1,28 @@
+.content,
+.detail {
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.image {
+  width: 520px;
+  height: 240px;
+}
+
+.content {
+  align-items: center;
+  min-width: 720px;
+  min-height: 439px;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  min-width: 112px;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+}

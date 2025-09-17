@@ -1,0 +1,10 @@
+.ingredients {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  flex-basis: 50%;
+  box-sizing: border-box;
+  list-style-type: none;
+}

@@ -1,7 +1,40 @@
-.burger_constructor {
+.container {
   display: flex;
   flex-direction: column;
-  width: 600px;
-  padding-bottom: 20px;
+  justify-items: end;
+  height: auto;
+  max-height: 100%;
   color: var(--text-primary-color);
+}
+
+.list {
+  list-style-type: none;
+}
+
+.dragIcon {
+  vertical-align: super;
+}
+
+.selectedIngredients {
+  max-height: 496px;
+  margin-right: -20px;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.selectedIngredients ul li {
+  margin: 16px 0;
+  list-style-type: none;
+}
+
+.ingredient {
+  max-height: 100%;
+  scroll-snap-align: center;
+  margin-left: auto;
+}
+
+.createOrder {
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }
