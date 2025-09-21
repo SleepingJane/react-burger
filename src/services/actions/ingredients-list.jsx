@@ -1,16 +1,11 @@
-import { BASE_URL, checkResponse } from '@/utils/api';
+import { request } from '@/utils/api';
 
 export const GET_INGREDIENTS_LIST = 'GET_INGREDIENTS_LIST';
 export const GET_INGREDIENTS_LIST_FAILED = 'GET_INGREDIENTS_LIST_FAILED';
 export const GET_INGREDIENTS_LIST_SUCCESS = 'GET_INGREDIENTS_LIST_SUCCESS';
 
 const getIngredientsListRequest = () => {
-  return fetch(`${BASE_URL}/ingredients`)
-    .then((response) => {
-      return checkResponse(response);
-    })
-    .then((result) => result.data)
-    .catch((error) => error);
+  return request('/ingredients').then((result) => result.data);
 };
 
 export function getIngredientsList() {

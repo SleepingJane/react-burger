@@ -1,4 +1,4 @@
-import { BASE_URL, checkResponse } from '@/utils/api';
+import { request } from '@/utils/api';
 
 import { CLEAR_CONSTRUCTOR } from './constructor-ingredients-list';
 
@@ -16,11 +16,7 @@ const createOrderRequest = (selectedIngredients) => {
     body: JSON.stringify({ ingredients: ids }),
   };
 
-  return fetch(`${BASE_URL}/orders`, params)
-    .then((response) => {
-      return checkResponse(response);
-    })
-    .catch((error) => error);
+  return request('/orders', params);
 };
 
 export function createOrder(selectedIngredients) {
