@@ -1,30 +1,29 @@
 import { Preloader } from '@krgaa/react-developer-burger-ui-components';
 import React from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
 
+import { getIngredientsList } from '../../services/actions/ingredients-list';
+
 import styles from './app.module.css';
 
-const FETCH_URL = 'https://norma.nomoreparties.space/api/ingredients';
-
 export const App = () => {
-  const [ingredients, setIngredients] = React.useState();
+  const { ingredients, isLoading } = useSelector((store) => ({
+    isLoading: store.ingredientsList.ingredientsListRequest,
+    ingredients: store.ingredientsList.data,
+  }));
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    fetch(FETCH_URL)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Ошибка ${response.status}`);
-      })
-      .then((result) => setIngredients(result.data))
-      .catch((error) => console.error('Ошибка:', error));
-  }, []);
+    dispatch(getIngredientsList());
+  }, [dispatch]);
 
-  if (!ingredients) {
+  if (isLoading) {
     return (
       <div className={styles.preloader}>
         <Preloader />
@@ -40,8 +39,10 @@ export const App = () => {
           Соберите бургер
         </h1>
         <main className={`${styles.main} pl-5 pr-5`}>
-          <BurgerIngredients ingredients={ingredients} />
-          <BurgerConstructor selectedIngredients={ingredients} />
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </DndProvider>
         </main>
       </div>
     )

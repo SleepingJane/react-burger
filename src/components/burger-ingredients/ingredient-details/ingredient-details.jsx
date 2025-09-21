@@ -1,6 +1,10 @@
+import { useSelector } from 'react-redux';
+
 import styles from './ingredient-details.module.css';
 
-export const IngredientDetails = ({ item }) => {
+export const IngredientDetails = () => {
+  const item = useSelector((state) => state.currentIngredient.data);
+
   const renderInfo = ({ title, value }) => {
     return (
       <div className={`pr-5 ${styles.detail}`}>
