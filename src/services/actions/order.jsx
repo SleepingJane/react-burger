@@ -1,8 +1,10 @@
+import { BASE_URL, checkResponse } from '@/utils/api';
+
+import { CLEAR_CONSTRUCTOR } from './constructor-ingredients-list';
+
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
-
-const FETCH_URL = 'https://norma.nomoreparties.space/api/orders';
 
 const createOrderRequest = (selectedIngredients) => {
   const ids = selectedIngredients.map((item) => item._id);
@@ -14,12 +16,9 @@ const createOrderRequest = (selectedIngredients) => {
     body: JSON.stringify({ ingredients: ids }),
   };
 
-  return fetch(FETCH_URL, params)
+  return fetch(`${BASE_URL}/orders`, params)
     .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Ошибка ${response.status}`);
+      return checkResponse(response);
     })
     .catch((error) => error);
 };
@@ -38,5 +37,6 @@ export function createOrder(selectedIngredients) {
       type: GET_ORDER_SUCCESS,
       data: result,
     });
+    dispatch({ type: CLEAR_CONSTRUCTOR });
   };
 }

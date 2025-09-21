@@ -1,5 +1,8 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import {
   ADD_INGREDIENT,
+  CLEAR_CONSTRUCTOR,
   MOVE_ITEMS,
   REMOVE_INGREDIENT,
 } from '../actions/constructor-ingredients-list';
@@ -37,7 +40,7 @@ export const constructorIngredientsListReducer = (state = initialState, action) 
       if (action.item.type === 'bun') {
         return {
           constructorItems: {
-            bunItem: action.item,
+            bunItem: { ...action.item, uniqueId: uuidv4() },
             ingredients: [...state.constructorItems.ingredients],
           },
         };
@@ -45,9 +48,15 @@ export const constructorIngredientsListReducer = (state = initialState, action) 
       return {
         constructorItems: {
           bunItem: state.constructorItems.bunItem,
-          ingredients: [...state.constructorItems.ingredients, action.item],
+          ingredients: [
+            ...state.constructorItems.ingredients,
+            { ...action.item, uniqueId: uuidv4() },
+          ],
         },
       };
+    }
+    case CLEAR_CONSTRUCTOR: {
+      return initialState;
     }
     default: {
       return state;
