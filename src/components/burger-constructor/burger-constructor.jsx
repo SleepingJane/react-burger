@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT } from '@/services/actions/constructor-ingredients-list';
+import { addIngredient } from '@/services/actions/constructor-ingredients-list';
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -33,7 +33,7 @@ export const BurgerConstructor = () => {
       isHover: monitor.isOver(),
     }),
     drop({ item }) {
-      addIngredient(item);
+      dispatch(addIngredient(item));
     },
   });
 
@@ -47,10 +47,6 @@ export const BurgerConstructor = () => {
   const moveIngredient = useCallback((dragIndex, hoverIndex) => {
     dispatch({ type: 'MOVE_ITEMS', toIndex: dragIndex, fromIndex: hoverIndex });
   }, []);
-
-  const addIngredient = (item) => {
-    dispatch({ type: ADD_INGREDIENT, item });
-  };
 
   return (
     <section ref={dropTarget} className={`${styles.container}`}>
