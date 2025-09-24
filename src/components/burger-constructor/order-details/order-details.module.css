@@ -8,3 +8,9 @@
 .image {
   width: 120px;
 }
+
+.preloader {
+  display: flex;
+  width: 40vw;
+  height: 50vh;
+}

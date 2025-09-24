@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-items: end;
+  min-width: 536px;
   height: auto;
   max-height: 100%;
   color: var(--text-primary-color);
@@ -16,6 +17,7 @@
 }
 
 .selectedIngredients {
+  min-width: 630px;
   max-height: 496px;
   margin-right: -20px;
   overflow-y: scroll;
@@ -37,4 +39,38 @@
   display: flex;
   justify-content: end;
   align-items: center;
+}
+
+.emptyView {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  align-self: end;
+  box-sizing: border-box;
+  width: 536px;
+  max-height: 80px;
+  margin: 16px 0 16px 40px;
+  padding-right: 24px;
+  padding-left: 24px;
+  color: #f2f2f3;
+  font-size: 16px;
+  line-height: 24px;
+  background: var(--background-element);
+  border-radius: var(--common-border-radius-s);
+}
+
+.emptyViewTop {
+  margin-bottom: 4px;
+  border-radius: var(--top-constructor-item-border-radius);
+}
+
+.emptyViewBottom {
+  margin-top: 4px;
+  border-radius: var(--bottom-constructor-item-border-radius);
+}
+
+.activeZone {
+  border: 3px dashed #8585ad;
+  border-radius: var(--common-border-radius-s);
 }
